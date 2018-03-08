@@ -23,7 +23,10 @@ while end != 1:
     score = player_one.get_score()
 
     if score > 21:
-        print(f'Bust: {score}')
+        print(f'Final Score: {score} (Bust)')
+        break
+    elif score == 21:
+        print(f'Final Score: {score} (Blackjack)')
         break
 
     print(f'Current Score: {score}')

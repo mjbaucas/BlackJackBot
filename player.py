@@ -9,9 +9,9 @@ class Player:
     
     def take_card(self, card):
         self.hand.append(card)
-        self.evaluate_score()
+        self.update_score()
         
-    def evaluate_score(self):
+    def update_score(self):
         score = 0
         for card in self.hand:
             number, suite = card.split('_')
