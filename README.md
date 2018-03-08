@@ -1,6 +1,6 @@
 # BlackJackBot
-* Setup
+Setup
 > source var.sh
 
-* Run
+Run
 > python game.py
