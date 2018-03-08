@@ -1,1 +1,0 @@
-export PATH="$PATH:/c/Users/mjbau/AppData/Local/Programs/Python/Python36"
