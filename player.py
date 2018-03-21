@@ -13,9 +13,17 @@ class Player:
         
     def update_score(self):
         score = 0
+        aces = 0
         for card in self.hand:
             number, suite = card.split('_')
             score += cards.scores[number]
+            if number == 'A':
+                aces += 1
+        if score > 21 and aces > 0:
+            while aces > 0 and score > 21:
+                score -= 10
+                aces -= 1
+
         self.score = score
     
     def get_score(self):
