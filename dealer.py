@@ -12,6 +12,9 @@ class Dealer:
 
     def deal_card(self):
         return self.deck.pop()
+
+    def return_card(self, card):
+        return self.deck.append(card)
         
     def shuffle_deck(self):
         shuffle(self.deck)

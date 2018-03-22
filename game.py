@@ -35,9 +35,10 @@ while end != 1:
         print(f'Player\'s Hand: {" - ".join(player_one.hand)}')
         print(f'Dealer\'s Hand: {dealer.hand[0]}')
 
-        # Check if dealer has black jack, if so game is over
+        # Check if dealer was dealt black jack, if so game is over
         if dealer.get_score() == 21:
-            print(f'Dealer has Blackjack! Better luck next time.')
+            print(f'Dealer\'s Hand: {" - ".join(dealer.hand)}')
+            print(f'Dealer was dealt Blackjack! Better luck next time.')
             end, new = rules.quit()
             break
 
@@ -82,6 +83,13 @@ while end != 1:
             break
         else:
             end = 0
+
+    # Return cards to deck
+    for card in player_one.hand:
+        dealer.return_card(card)
+
+    for card in dealer.hand:
+        dealer.return_card(card)
 
 
 # Here we should print out a tally of win/loss ratio
