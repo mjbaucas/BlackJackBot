@@ -15,7 +15,7 @@ class Player:
         score = 0
         aces = 0
         for card in self.hand:
-            number, suite = card.split('_')
+            number, suit = card.split('_')
             score += cards.scores[number]
             if number == 'A':
                 aces += 1
@@ -28,3 +28,10 @@ class Player:
     
     def get_score(self):
         return self.score
+
+    def basic_strategy(self, player_one, dealer):
+        if dealer.get_score() < 10:
+            decision = 's'
+        elif dealer.get_score() >= 10:
+            decision = 'h'
+        return  decision
