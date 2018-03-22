@@ -17,12 +17,21 @@ class Rules:
         return self.end, self.new
 
     def whowon(self, player_one, dealer):
-        if dealer.get_score() <= 21 & dealer.get_score() > player_one.get_score():
+        if player_one.get_score() > 21:
+            # Player bust
+            print(f'You busted with a score of {player_one.get_score()}. The dealer wins!')
+        elif player_one.get_score() == 21 and dealer.get_score() != 21:
+            # Player Blacjack!
+            print(f'You won by getting Blackjack!')
+        elif player_one.get_score() <= 21 and dealer.get_score() > 21:
+            # Dealer busts
+            print(f'The dealer busted with a score of {dealer.get_score()}! You win!')
+        elif dealer.get_score() <= 21 and dealer.get_score() > player_one.get_score():
             # Dealer wins
             print(f'The dealer wins!')
-        elif player_one.get_score() <= 21 & player_one.get_score() > dealer.get_score():
+        elif player_one.get_score() <= 21 and player_one.get_score() > dealer.get_score():
             # Player wins
             print(f'Congratulations! You win!')
         elif player_one.get_score() == dealer.get_score():
-            # Its a
+            # Its a tie
             print(f'The result is a push (tie).')

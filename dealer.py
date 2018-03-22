@@ -8,6 +8,7 @@ class Dealer:
         self.deck = deck
         self.hand = []
         self.score = 0
+        self.one_card_score = 0
 
     def deal_card(self):
         return self.deck.pop()
@@ -23,16 +24,25 @@ class Dealer:
         score = 0
         aces = 0
         for card in self.hand:
-            number, suite = card.split('_')
+            number, suit = card.split('_')
             score += cards.scores[number]
             if number == 'A':
                 aces += 1
-        if score > 21 and aces > 0:
+        if score > 17 and aces > 0:
             while aces > 0 and score > 21:
                 score -= 10
                 aces -= 1
 
+        # This is the dealer's actual score
         self.score = score
+
+        # This is the score we will display to the player
+        number, suit = self.hand[0].split('_')
+        self.one_card_score = number
+
 
     def get_score(self):
         return self.score
+
+    def get_one_card_score(self):
+        return self.one_card_score
