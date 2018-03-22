@@ -7,7 +7,7 @@ from random import *
 rules = Rules()
 # Set robot to 0 if manually playing,
 # Set robot to 1 if robot is playing
-robot = 0
+robot = 1
 end = 0
 while end != 1:
     dealer = Dealer()
@@ -62,9 +62,11 @@ while end != 1:
             decision = player_one.basic_strategy(player_one, dealer)
 
         if decision is 'H' or decision is 'h':
+            print(f'Player Hits.')
             card = dealer.deal_card()
             player_one.take_card(card)
         elif decision is 'S' or decision is 's':
+            print(f'Player Stands.')
             print(f'Player\'s Final Score: {player_one.get_score()}')
             # Let the dealer play here and then compare
             print(f'The dealer will now play. \nThe dealer must hit if score is lower than 17.')

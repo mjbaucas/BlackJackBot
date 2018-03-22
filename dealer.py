@@ -41,8 +41,7 @@ class Dealer:
 
         # This is the score we will display to the player
         number, suit = self.hand[0].split('_')
-        self.one_card_score = number
-
+        self.one_card_score = cards.scores[number]
 
     def get_score(self):
         return self.score
