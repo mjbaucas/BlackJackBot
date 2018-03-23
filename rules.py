@@ -20,18 +20,24 @@ class Rules:
         if player_one.get_score() > 21:
             # Player bust
             print(f'You busted with a score of {player_one.get_score()}. The dealer wins!')
+            player_one.losses += 1
         elif player_one.get_score() == 21 and dealer.get_score() != 21:
             # Player Blacjack!
             print(f'You won by getting Blackjack!')
+            player_one.wins += 1
         elif player_one.get_score() <= 21 and dealer.get_score() > 21:
             # Dealer busts
             print(f'The dealer busted with a score of {dealer.get_score()}! You win!')
+            player_one.wins += 1
         elif dealer.get_score() <= 21 and dealer.get_score() > player_one.get_score():
             # Dealer wins
             print(f'The dealer wins!')
+            player_one.losses += 1
         elif player_one.get_score() <= 21 and player_one.get_score() > dealer.get_score():
             # Player wins
             print(f'Congratulations! You win!')
+            player_one.wins += 1
         elif player_one.get_score() == dealer.get_score():
             # Its a tie
             print(f'The result is a push (tie).')
+            player_one.ties += 1
