@@ -110,8 +110,6 @@ for x in range (0,10000):
         dealer.deck4 = deck[:]
         dealer.shuffle_deck()
 
-
-
     # Return cards to deck
     #for card in player_one.hand:
     #   dealer.return_card(card)
@@ -119,6 +117,6 @@ for x in range (0,10000):
     #for card in dealer.hand:
     #    dealer.return_card(card)
 
-
 # Here we should print out a tally of win/loss ratio
 print(f'Record: {player_one.wins}-{player_one.losses}-{player_one.ties}')
+print(f'Winning Pct: {round((player_one.wins/(player_one.wins + player_one.losses))*100, 2)}%')
