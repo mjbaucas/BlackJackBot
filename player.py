@@ -7,11 +7,15 @@ class Player:
         self.hand = []
         self.score = 0
         self.aces = 0
+        self.wins = 0
+        self.losses = 0
+        self.ties = 0
+
         # Key is player_dealer scores, value is hit or stand
         self.strategy = {'20_2': 'S', '20_3': 'S', '20_4': 'S', '20_5': 'S', '20_6': 'S', '20_7': 'S', '20_8': 'S',
                             '20_9': 'S', '20_10': 'S', '20_11': 'S',
                         '19_2': 'S', '19_3': 'S', '19_4': 'S', '19_5': 'S', '19_6': 'S', '19_7': 'S', '19_8': 'S',
-                            '19_9': 'S', '19_20': 'S', '19_11': 'S',
+                            '19_9': 'S', '19_10': 'S', '19_11': 'S',
                         '18_2': 'S', '18_3': 'S', '18_4': 'S', '18_5': 'S', '18_6': 'S', '18_7': 'S', '18_8': 'S',
                             '18_9': 'S', '18_10': 'S', '18_11': 'S',
                         '17_2': 'S', '17_3': 'S', '17_4': 'S', '17_5': 'S', '17_6': 'S', '17_7': 'S', '17_8': 'S',
@@ -39,13 +43,15 @@ class Player:
                         '6_2': 'H', '6_3': 'H', '6_4': 'H', '6_5': 'H', '6_6': 'H', '6_7': 'H', '6_8': 'H', '6_9': 'H',
                             '6_10': 'H', '6_11': 'H',
                         '5_2': 'H', '5_3': 'H', '5_4': 'H', '5_5': 'H', '5_6': 'H', '5_7': 'H', '5_8': 'H', '5_9': 'H',
-                            '5_10': 'H', '5_11': 'H'
+                            '5_10': 'H', '5_11': 'H',
+                        '4_2': 'H', '4_3': 'H', '4_4': 'H', '4_5': 'H', '4_6': 'H', '4_7': 'H', '4_8': 'H', '4_9': 'H',
+                            '4_10': 'H', '4_11': 'H',
                     }
 
         self.softstrategy = {'20_2': 'S', '20_3': 'S', '20_4': 'S', '20_5': 'S', '20_6': 'S', '20_7': 'S', '20_8': 'S',
                                 '20_9': 'S', '20_10': 'S', '20_11': 'S',
                              '19_2': 'S', '19_3': 'S', '19_4': 'S', '19_5': 'S', '19_6': 'S', '19_7': 'S', '19_8': 'S',
-                                '19_9': 'S', '19_20': 'S', '19_11': 'S',
+                                '19_9': 'S', '19_10': 'S', '19_11': 'S',
                              '18_2': 'S', '18_3': 'S', '18_4': 'S', '18_5': 'S', '18_6': 'S', '18_7': 'S', '18_8': 'S',
                                 '18_9': 'H', '18_10': 'H', '18_11': 'H',
                              '17_2': 'H', '17_3': 'H', '17_4': 'H', '17_5': 'H', '17_6': 'H', '17_7': 'H', '17_8': 'H',
@@ -72,7 +78,7 @@ class Player:
             if number == 'A':
                 self.aces += 1
         if score > 21 and self.aces > 0:
-            while aces > 0 and score > 21:
+            while self.aces > 0 and score > 21:
                 score -= 10
                 self.aces -= 1
 
@@ -83,8 +89,14 @@ class Player:
 
     def basic_strategy(self, player_one, dealer):
         combined = str(player_one.get_score()) + "_" + str(dealer.get_one_card_score())
-        if self.aces >= 1:
+        if self.aces >= 1 and len(self.hand) == 2 and self.score > 12:
             decision = self.softstrategy[combined]
         else:
             decision = self.strategy[combined]
         return decision
+
+    def update_wins(self):
+        self.wins += 1
+
+    def update_losses(self):
+        self.losses += 1

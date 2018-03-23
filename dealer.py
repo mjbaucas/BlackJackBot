@@ -4,20 +4,41 @@ from cards import Cards
 cards = Cards()
 
 class Dealer:
-    def init(self, deck):
-        self.deck = deck
+    def init(self, deck1, deck2, deck3, deck4):
+        self.deck1 = deck1
+        self.deck2 = deck2
+        self.deck3 = deck3
+        self.deck4 = deck4
         self.hand = []
         self.score = 0
         self.one_card_score = 0
 
     def deal_card(self):
-        return self.deck.pop()
+        # Need to take card from one of the four decks at random
+        decknum = randint(1, 4)
+        if decknum == 1:
+            return self.deck1.pop()
+        elif decknum == 2:
+            return self.deck2.pop()
+        elif decknum == 3:
+            return self.deck3.pop()
+        elif decknum == 4:
+            return self.deck4.pop()
 
-    def return_card(self, card):
-        return self.deck.append(card)
+    # def return_card(self, card):
+        # return self.deck.append(card)
         
     def shuffle_deck(self):
-        shuffle(self.deck)
+        shuffle(self.deck1)
+        shuffle(self.deck2)
+        shuffle(self.deck3)
+        shuffle(self.deck4)
+
+    def reset_decks(self, deck1, deck2, deck3, deck4):
+        self.deck1 = deck1
+        self.deck2 = deck2
+        self.deck3 = deck3
+        self.deck4 = deck4
 
     def take_card(self, card):
         self.hand.append(card)
