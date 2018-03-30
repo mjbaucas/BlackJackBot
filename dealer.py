@@ -25,8 +25,12 @@ class Dealer:
         elif decknum == 4:
             return self.deck4.pop()
 
-    # def return_card(self, card):
-        # return self.deck.append(card)
+    def hit(self):
+        # Dealer must hit if their score is less than 17
+        card = self.deal_card()
+        self.take_card(card)
+        print(f'Dealer\'s Hand After Hit: {" - ".join(self.hand)}')
+        print(f'Dealer\'s New Score After Hit: {self.get_score()}')
         
     def shuffle_deck(self):
         shuffle(self.deck1)

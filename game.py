@@ -17,21 +17,17 @@ player_one.init()
 dealer.shuffle_deck()
 robot = 1
 end = 0
+
+# Training Loop
+
+
+# Trained Strategy Loop
+
+
+
+# Basic Strategy Loop
 for x in range (0,10000):
-    numcards = len(dealer.deck1) + len(dealer.deck2) + len(dealer.deck3) + len(dealer.deck4)
-    print(f' Initial Number Cards: {numcards}')
-
-    # Deal two cards to player
-    card = dealer.deal_card()
-    player_one.take_card(card)
-    card = dealer.deal_card()
-    player_one.take_card(card)
-
-    # Deal two cards to dealer
-    card = dealer.deal_card()
-    dealer.take_card(card)
-    card = dealer.deal_card()
-    dealer.take_card(card)
+    rules.dealHand(player_one, dealer)
 
     new = 1
     while new == 1:
@@ -77,10 +73,7 @@ for x in range (0,10000):
             print(f'Dealer\'s Current Score: {dealer.get_score()}')
             while dealer.get_score() < 17:
                 # Dealer must hit if their score is less than 17
-                card = dealer.deal_card()
-                dealer.take_card(card)
-                print(f'Dealer\'s Hand After Hit: {" - ".join(dealer.hand)}')
-                print(f'Dealer\'s New Score After Hit: {dealer.get_score()}')
+                dealer.hit()
 
             # Game is over. Find out who wins
             rules.whowon(player_one, dealer)
@@ -89,34 +82,10 @@ for x in range (0,10000):
         else:
             end = 0
 
-    # Clear Hands
-    player_one.hand = []
-    player_one.aces = 0
-    dealer.hand = []
-
-    # If cards are running low reset the decks
-    deck = Cards.deck
-    # If a deck gets below 30 cards reset it
-    if len(dealer.deck1) < 30:
-        dealer.deck1 = deck[:]
-        dealer.shuffle_deck()
-    if len(dealer.deck2) < 30:
-        dealer.deck2 = deck[:]
-        dealer.shuffle_deck()
-    if len(dealer.deck3) < 30:
-        dealer.deck3 = deck[:]
-        dealer.shuffle_deck()
-    if len(dealer.deck4) < 30:
-        dealer.deck4 = deck[:]
-        dealer.shuffle_deck()
-
-    # Return cards to deck
-    #for card in player_one.hand:
-    #   dealer.return_card(card)
-
-    #for card in dealer.hand:
-    #    dealer.return_card(card)
+    rules.clearHand(player_one, dealer)
 
 # Here we should print out a tally of win/loss ratio
-print(f'Record: {player_one.wins}-{player_one.losses}-{player_one.ties}')
-print(f'Winning Pct: {round((player_one.wins/(player_one.wins + player_one.losses))*100, 2)}%')
+print(f'Record: {player_one.basicwins}-{player_one.basiclosses}-{player_one.basicties}')
+print(f'Winning Pct: {round((player_one.basicwins/(player_one.basicwins + player_one.basiclosses))*100, 2)}%')
+print(f'Player Units: {player_one.units}')
+print(f'Player Blackjacks: {player_one.blackjacks}')

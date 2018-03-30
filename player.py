@@ -7,9 +7,11 @@ class Player:
         self.hand = []
         self.score = 0
         self.aces = 0
-        self.wins = 0
-        self.losses = 0
-        self.ties = 0
+        self.basicwins = 0
+        self.basiclosses = 0
+        self.basicties = 0
+        self.units = 100
+        self.blackjacks = 0
 
         # Key is player_dealer scores, value is hit or stand
         self.strategy = {'20_2': 'S', '20_3': 'S', '20_4': 'S', '20_5': 'S', '20_6': 'S', '20_7': 'S', '20_8': 'S',
@@ -95,8 +97,11 @@ class Player:
             decision = self.strategy[combined]
         return decision
 
-    def update_wins(self):
-        self.wins += 1
+    def update_basicwins(self):
+        self.basicwins += 1
 
-    def update_losses(self):
-        self.losses += 1
+    def update_basiclosses(self):
+        self.basiclosses += 1
+
+    def update_basicties(self):
+        self.basicties += 1
