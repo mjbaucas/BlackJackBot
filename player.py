@@ -1,4 +1,5 @@
 from cards import Cards
+from random import *
 
 cards = Cards()
 
@@ -7,9 +8,11 @@ class Player:
         self.hand = []
         self.score = 0
         self.aces = 0
-        self.wins = 0
-        self.losses = 0
-        self.ties = 0
+        self.basicwins = 0
+        self.basiclosses = 0
+        self.basicties = 0
+        self.units = 100
+        self.blackjacks = 0
 
         # Key is player_dealer scores, value is hit or stand
         self.strategy = {'20_2': 'S', '20_3': 'S', '20_4': 'S', '20_5': 'S', '20_6': 'S', '20_7': 'S', '20_8': 'S',
@@ -65,6 +68,9 @@ class Player:
                              '13_2': 'H', '13_3': 'H', '13_4': 'H', '13_5': 'H', '13_6': 'H', '13_7': 'H', '13_8': 'H',
                                 '13_9': 'H', '13_10': 'H', '13_11': 'H'
                              }
+
+        self.QStrategy= {}
+        self.QSoftStrategy = {}
     
     def take_card(self, card):
         self.hand.append(card)
@@ -87,6 +93,19 @@ class Player:
     def get_score(self):
         return self.score
 
+    def hit(self, dealer):
+        print(f'Player Hits.')
+        card = dealer.deal_card()
+        self.take_card(card)
+
+    def randomhit(self, dealer):
+        hit = randint(0, 1)
+        if hit == 1:
+            decision = 'H'
+        else:
+            decision = 'S'
+        return decision
+
     def basic_strategy(self, player_one, dealer):
         combined = str(player_one.get_score()) + "_" + str(dealer.get_one_card_score())
         if self.aces >= 1 and len(self.hand) == 2 and self.score > 12:
@@ -95,8 +114,64 @@ class Player:
             decision = self.strategy[combined]
         return decision
 
-    def update_wins(self):
-        self.wins += 1
+    def QLearning_strategy(self, dealer):
+        combined = str(self.get_score()) + "_" + str(dealer.get_one_card_score())
+        if self.aces >= 1 and len(self.hand) == 2 and self.score > 12:
+            if combined in self.QSoftStrategy:
+                if self.QSoftStrategy[combined] > 0:
+                    decision = 'S'
+                elif self.QSoftStrategy[combined] < 0:
+                    decision = 'H'
+                else:
+                    decision = self.randomhit(dealer)
+            else:
+                decision = self.randomhit(dealer)
+        else:
+            if combined in self.QStrategy:
+                if self.QStrategy[combined] > 0:
+                    decision = 'S'
+                elif self.QStrategy[combined] < 0:
+                    decision = 'H'
+                else:
+                    decision = self.randomhit(dealer)
+            else:
+                decision = self.randomhit(dealer)
+        return decision
 
-    def update_losses(self):
-        self.losses += 1
+    def updateQStrategy(self, dealer, winner):
+        # Update QStrategy dictionaries
+        self.hand.pop(-1)
+        combined = str(self.get_score()) + "_" + str(dealer.get_one_card_score())
+        if self.aces >= 1 and len(self.hand) == 2 and self.score > 12:
+            if combined in self.QSoftStrategy:
+                self.updateQSoftStrategyDict(combined, winner)
+            else:
+                self.QSoftStrategy[combined] = 0
+                self.updateQSoftStrategyDict(combined, winner)
+        else:
+            if combined in self.QStrategy:
+                self.updateQStrategyDict(combined, winner)
+            else:
+                self.QStrategy[combined] = 0
+                self.updateQStrategyDict(combined, winner)
+
+    def updateQStrategyDict(self, combined, winner):
+        if winner == 1:
+            self.QStrategy[combined] += 1
+        elif winner == 0:
+            self.QStrategy[combined] -= 1
+
+    def updateQSoftStrategyDict(self, combined, winner):
+        if winner == 1:
+            self.QSoftStrategy[combined] += 1
+        elif winner == 0:
+            self.QSoftStrategy[combined] -= 1
+
+    def update_basicwins(self):
+        self.basicwins += 1
+
+    def update_basiclosses(self):
+        self.basiclosses += 1
+
+    def update_basicties(self):
+        self.basicties += 1
