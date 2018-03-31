@@ -67,6 +67,13 @@ class Rules:
             player_one.units += 1.5
             player_one.blackjacks += 1
             return 1
+        elif player_one.get_score() == 21 and dealer.get_score() == 21 and len(player_one.hand) == 2 and len(dealer.hand) == 2:
+                # Player Blacjack!
+                print(f'You won by getting Blackjack!')
+                player_one.update_basicwins()
+                player_one.units += 1.5
+                player_one.blackjacks += 1
+                return 1
         elif player_one.get_score() <= 21 and dealer.get_score() > 21:
             # Dealer busts
             print(f'The dealer busted with a score of {dealer.get_score()}! You win!')
