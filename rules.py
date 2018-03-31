@@ -59,28 +59,34 @@ class Rules:
             print(f'You busted with a score of {player_one.get_score()}. The dealer wins!')
             player_one.update_basiclosses()
             player_one.units -= 1
+            return 0
         elif player_one.get_score() == 21 and dealer.get_score() != 21:
             # Player Blacjack!
             print(f'You won by getting Blackjack!')
             player_one.update_basicwins()
             player_one.units += 1.5
             player_one.blackjacks += 1
+            return 1
         elif player_one.get_score() <= 21 and dealer.get_score() > 21:
             # Dealer busts
             print(f'The dealer busted with a score of {dealer.get_score()}! You win!')
             player_one.update_basicwins()
             player_one.units += 1
+            return 1
         elif dealer.get_score() <= 21 and dealer.get_score() > player_one.get_score():
             # Dealer wins
             print(f'The dealer wins!')
             player_one.units -= 1
             player_one.update_basiclosses()
+            return 0
         elif player_one.get_score() <= 21 and player_one.get_score() > dealer.get_score():
             # Player wins
             print(f'Congratulations! You win!')
             player_one.update_basicwins()
             player_one.units += 1
+            return 1
         elif player_one.get_score() == dealer.get_score():
             # Its a tie
             print(f'The result is a push (tie).')
             player_one.update_basicties()
+            return 2
