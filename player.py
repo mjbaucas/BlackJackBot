@@ -140,6 +140,7 @@ class Player:
 
     def updateQStrategy(self, dealer, winner):
         # Update QStrategy dictionaries
+        self.hand.pop(-1)
         combined = str(self.get_score()) + "_" + str(dealer.get_one_card_score())
         if self.aces >= 1 and len(self.hand) == 2 and self.score > 12:
             if combined in self.QSoftStrategy:
