@@ -23,7 +23,7 @@ training = 1
 # Training Loop
 
 if training == 1:
-    for x in range(0, 500000):
+    for x in range(0, 10000):
         rules.dealHand(player_one, dealer)
 
         new = 1
